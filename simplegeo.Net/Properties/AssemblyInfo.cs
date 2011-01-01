@@ -10,11 +10,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("simplegeo.Net")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SimpleGeo.Net")]
+[assembly: AssemblyDescription(".Net client library for SimpleGeo.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jörg Battermann")]
-[assembly: AssemblyProduct("simplegeo.Net")]
+[assembly: AssemblyProduct("SimpleGeo.Net")]
 [assembly: AssemblyCopyright("Copyright © Jörg Battermann 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

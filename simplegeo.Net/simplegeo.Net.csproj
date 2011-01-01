@@ -8,8 +8,8 @@
     <ProjectGuid>{C607F429-A611-4111-A27F-B10EB9B50BC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>simplegeo.Net</RootNamespace>
-    <AssemblyName>simplegeo.Net</AssemblyName>
+    <RootNamespace>SimpleGeo.Net</RootNamespace>
+    <AssemblyName>SimpleGeo.Net</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -32,17 +32,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Hammock">
+      <HintPath>..\libs\Hammock.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\libs\RestSharp.dll</HintPath>
+    <Reference Include="Hammock.Extras">
+      <HintPath>..\libs\Hammock.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="Feature.cs" />
+    <Compile Include="FeatureCollection.cs" />
+    <Compile Include="Geometry.cs" />
+    <Compile Include="MultiPolygon.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
