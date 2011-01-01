@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="simplegeo.Net.SampleApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OAuthToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;enter your simplegeo OAuth Token here&gt;</Value>
+    </Setting>
+    <Setting Name="OAuthSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;enter your simplegeo OAuth Secret here&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
