@@ -17,12 +17,12 @@ namespace SimpleGeo.Net
         /// <summary>
         /// Stores the OAuth Consumer Key
         /// </summary>
-        private readonly string _oAuthKey;
+        private readonly string _oauthKey;
 
         /// <summary>
         /// Stores the OAuth Consumer Secret
         /// </summary>
-        private readonly string _oAuthSecret;
+        private readonly string _oauthSecret;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -31,8 +31,8 @@ namespace SimpleGeo.Net
         /// <param name="oauthSecret">The OAuth secret.</param>
         public Client(string oauthKey, string oauthSecret)
         {
-            this._oAuthKey = oauthKey;
-            this._oAuthSecret = oauthSecret;
+            this._oauthKey = oauthKey;
+            this._oauthSecret = oauthSecret;
         }
     }
 }

@@ -12,7 +12,8 @@
     <AssemblyName>SimpleGeo.Net</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,9 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Coordinate.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureCollection.cs" />
     <Compile Include="Geometry.cs" />
+    <Compile Include="Handle.cs" />
     <Compile Include="MultiPolygon.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Polygon.cs" />

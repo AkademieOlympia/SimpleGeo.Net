@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SimpleGeo.Net
 {
-    class MultiPolygon
+    public class MultiPolygon
     {
     }
 }
