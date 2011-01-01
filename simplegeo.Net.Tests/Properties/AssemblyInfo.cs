@@ -10,11 +10,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("simplegeo.Net")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("simplegeo.Net.Tests")]
+[assembly: AssemblyDescription("Unit tests for the simplegeo.Net library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jörg Battermann")]
-[assembly: AssemblyProduct("simplegeo.Net")]
+[assembly: AssemblyProduct("simplegeo.Net.Tests")]
 [assembly: AssemblyCopyright("Copyright © Jörg Battermann 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -23,4 +23,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("0.0.0.1")]
 
-[assembly: Guid("0fb2bfab-dceb-4590-aa55-270f6e2a8bb0")]
+[assembly: Guid("41ed12a4-576d-45a0-acc8-17fea3c7e4c6")]
