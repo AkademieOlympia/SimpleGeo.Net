@@ -1,0 +1,3 @@
+﻿This project contains the Unit tests for the SimpleGeo.Net assembly.
+However, before running these, you MUST enter your own SimpleGeo OAuth Key and OAuth Secret
+available at http://simplegeo.com/tokens/.

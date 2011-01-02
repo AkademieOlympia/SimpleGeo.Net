@@ -3,8 +3,8 @@
 //   Copyright © Jörg Battermann 2011
 // </copyright>
 // <summary>
-//   This is a test class for Client.cs and is intended
-//   to contain all ClientTests Unit Tests
+//   This is a test class for <see cref="SimpleGeo.Net.Client"/> and is intended
+//   to contain all corresponding Unit Tests
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -13,11 +13,11 @@ using Hammock.Authentication.OAuth;
 
 namespace SimpleGeo.Net.Tests
 {
-    
-    
+    using System;
+
     /// <summary>
-    ///This is a test class for Client.cs and is intended
-    ///to contain all ClientTests Unit Tests
+    ///This is a test class for <see cref="SimpleGeo.Net.Client"/> and is intended
+    ///to contain all corresponding Unit Tests
     ///</summary>
     [TestClass()]
     public class ClientTests
@@ -57,33 +57,68 @@ namespace SimpleGeo.Net.Tests
         //}
         //
         #endregion
-
-
-        /// <summary>
-        ///A test for Client Constructor
-        ///</summary>
-        [TestMethod()]
-        public void ClientConstructorTests()
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ClientConstructorThrowsArgumentNullExceptionOnNullOAuthCredentials()
         {
-            OAuthCredentials oauthCredentials = null; // TODO: Initialize to an appropriate value
-            string authority = string.Empty; // TODO: Initialize to an appropriate value
-            string versionPath = string.Empty; // TODO: Initialize to an appropriate value
-            Client target = new Client(oauthCredentials, authority, versionPath);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            OAuthCredentials oauthCredentials = null;
+            Client target = new Client(oauthCredentials);
         }
 
-        /// <summary>
-        ///A test for Client Constructor
-        ///</summary>
-        [TestMethod()]
-        public void ClientConstructorTests1()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyOAuthToken()
         {
-            string oauthKey = string.Empty; // TODO: Initialize to an appropriate value
-            string oauthSecret = string.Empty; // TODO: Initialize to an appropriate value
-            string authority = string.Empty; // TODO: Initialize to an appropriate value
-            string versionPath = string.Empty; // TODO: Initialize to an appropriate value
-            Client target = new Client(oauthKey, oauthSecret, authority, versionPath);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            string oauthToken = string.Empty;
+            string oauthSecret = "Some OAuth Secret";
+            Client target = new Client(oauthToken, oauthSecret);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyOAuthSecret()
+        {
+            string oauthToken = "Some OAuth Token";
+            string oauthSecret = string.Empty;
+            Client target = new Client(oauthToken, oauthSecret);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyAuthorityUrl()
+        {
+            string oauthToken = "Some OAuth Token";
+            string oauthSecret = "Some OAuth Secret";
+            string authority = string.Empty;
+            Client target = new Client(oauthToken, oauthSecret, authority);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyApiVersion()
+        {
+            string oauthToken = "Some OAuth Token";
+            string oauthSecret = "Some OAuth Secret";
+            string apiVersion = string.Empty;
+            Client target = new Client(oauthToken, oauthSecret, versionPath:apiVersion);
+        }
+
+        [TestMethod]
+        public void ClientConstructorTest()
+        {
+            string oauthToken = "Some OAuth Token";
+            string oauthSecret = "Some OAuth Secret";
+            string apiVersion = "2.0";
+            string authorityUrl = "http://api.someurl.com";
+
+            Client target = new Client(oauthToken, oauthSecret, authorityUrl, apiVersion);
+            Assert.IsNotNull(target);
+            Assert.IsNotNull(target.Credentials);
+            Assert.AreEqual(((OAuthCredentials)target.Credentials).ConsumerKey, oauthToken);
+            Assert.AreEqual(((OAuthCredentials)target.Credentials).ConsumerSecret, oauthSecret);
+            Assert.AreEqual(target.Authority, authorityUrl);
+            Assert.AreEqual(target.VersionPath, apiVersion);
         }
     }
 }
