@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("SimpleGeo.Net")]
@@ -22,5 +23,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly: AssemblyVersion("0.0.0.1")]
+
+[assembly: InternalsVisibleTo("SimpleGeo.Net.Tests")]
 
 [assembly: Guid("0fb2bfab-dceb-4590-aa55-270f6e2a8bb0")]
