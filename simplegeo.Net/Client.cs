@@ -14,6 +14,8 @@ namespace SimpleGeo.Net
 
     /// <summary>
     /// The Client Class is the main entry point to send requests to and get responses from the SimpleGeo Api
+    /// This Class derives from <see cref="Hammock.RestClient"/> allowing direct access to the underlying raw
+    /// methods and properties.
     /// </summary>
     public sealed class Client : Hammock.RestClient
     {
@@ -101,6 +103,49 @@ namespace SimpleGeo.Net
         internal Client()
             : base()
         {
+        }
+
+        /// <summary>
+        /// Gets the feature by its <c>Handle</c>.
+        /// </summary>
+        /// <param name="handle">The <see cref="Handle"/>.</param>
+        /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
+        public Feature GetFeatureByHandle(Handle handle)
+        {
+            if (handle == null)
+            {
+                throw new ArgumentNullException("handle");
+            }
+
+            return this.GetFeatureByHandle(handle.ToString());
+        }
+
+        /// <summary>
+        /// Gets the feature by its complete handle, e.g. 'SG_2MySaPILVQG3MoXrsVehyR_37.215297_-119.663837'
+        /// </summary>
+        /// <param name="handle">The <see cref="Handle"/> but in proper string format.</param>
+        /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
+        public Feature GetFeatureByHandle(string handle)
+        {
+            if (handle == null)
+            {
+                throw new ArgumentNullException("handle");
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the feature by its handle string components. Note: the 'SG_' part will automatically be prepended
+        /// </summary>
+        /// <seealso cref="http://simplegeo.com/docs/getting-started/simplegeo-101#handle"/>
+        /// <param name="uniqueString">The unique string.</param>
+        /// <param name="approximateLocation">The approximate location.</param>
+        /// <param name="epoch">The epoch.</param>
+        /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
+        public Feature GetFeature(string uniqueString, Coordinate approximateLocation = null, DateTime? epoch = null)
+        {
+            return this.GetFeatureByHandle(new Handle(uniqueString, approximateLocation, epoch));
         }
     }
 }

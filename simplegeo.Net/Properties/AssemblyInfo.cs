@@ -25,5 +25,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.0.0.1")]
 
 [assembly: InternalsVisibleTo("SimpleGeo.Net.Tests")]
+[assembly: InternalsVisibleTo("SimpleGeo.Net.SampleApp")]
 
 [assembly: Guid("0fb2bfab-dceb-4590-aa55-270f6e2a8bb0")]

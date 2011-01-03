@@ -12,6 +12,10 @@ namespace SimpleGeo.Net.SampleApp
     {
         static void Main(string[] args)
         {
+            var def = Handle.Parse("SG_2AziTafTLNReeHpRRkfipn_37.766713_-122.428938@1291796505");
+
+            Console.WriteLine(def.ToString());
+
             var abc = new SimpleGeo.Net.Client("", "");
             
             string consumerKey = "<enter here>";

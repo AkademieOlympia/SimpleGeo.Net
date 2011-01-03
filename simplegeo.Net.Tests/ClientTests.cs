@@ -120,5 +120,10 @@ namespace SimpleGeo.Net.Tests
             Assert.AreEqual(target.Authority, authorityUrl);
             Assert.AreEqual(target.VersionPath, apiVersion);
         }
+
+        public void GetFeatureByHandleTest()
+        {
+                    
+        }
     }
 }

@@ -9,6 +9,8 @@
 
 namespace SimpleGeo.Net
 {
+    using System;
+
     /// <summary>
     /// Defines the Coordinate type.
     /// </summary>
@@ -36,5 +38,16 @@ namespace SimpleGeo.Net
         /// </summary>
         /// <value>The longitude.</value>
         public double Longitude { get; private set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
