@@ -42,5 +42,15 @@ namespace SimpleGeo.Net
         /// </summary>
         /// <value>The properties.</value>
         public Dictionary<string, object> Properties { get; private set; }
+
+        /// <summary>
+        /// Gets the URL.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns>Full Url of this Feature</returns>
+        public string GetUrl(Client client)
+        {
+            return string.Format("{0}/{1}/features/{2}.json", client.Authority, client.VersionPath, this.Handle);
+        }
     }
 }

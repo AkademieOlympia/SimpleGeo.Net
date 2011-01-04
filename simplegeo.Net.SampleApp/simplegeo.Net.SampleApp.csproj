@@ -41,9 +41,6 @@
     <Reference Include="Hammock">
       <HintPath>..\libs\Hammock.dll</HintPath>
     </Reference>
-    <Reference Include="Hammock.Extras">
-      <HintPath>..\libs\Hammock.Extras.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>

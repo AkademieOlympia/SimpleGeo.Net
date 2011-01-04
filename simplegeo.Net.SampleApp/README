@@ -1,1 +1,9 @@
 ﻿This is a sample console application I use for rough testing and playing and once the lib is somewhat stable it'll be used to demonstrate some features..
+
+On my machine I've told git to ignore further changes the corresponding app.config/settings files like that:
+	
+	git update-index --assume-unchanged Program.cs
+	git update-index --assume-unchanged app.config
+	git update-index --assume-unchanged Properties/Settings.*
+
+In order to reverse this, you can simply use the command '--no-assume-unchanged' instead of '--assume-unchanged' (see http://stackoverflow.com/questions/4114163/how-to-tell-git-to-ignore-all-further-edit-to-a-single-file-without-removing-it-f)

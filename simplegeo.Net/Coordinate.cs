@@ -9,8 +9,6 @@
 
 namespace SimpleGeo.Net
 {
-    using System;
-
     /// <summary>
     /// Defines the Coordinate type.
     /// </summary>
@@ -47,7 +45,7 @@ namespace SimpleGeo.Net
         /// </returns>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "Latitude: {0}, Longitude: {1}", this.Latitude, this.Longitude);
         }
     }
 }

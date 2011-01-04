@@ -22,12 +22,12 @@ namespace SimpleGeo.Net
         /// <summary>
         /// Defines the (as of writing) base API Url and endpoint for the SimpleGeo Api
         /// </summary>
-        private const string AUTHORITY = "http://api.simplegeo.com";
+        internal const string AUTHORITY = "http://api.simplegeo.com";
 
         /// <summary>
         /// Defines the (as of writing) API version for the SimpleGeo Api
         /// </summary>
-        private const string VERSIONPATH = "1.0";
+        internal const string VERSIONPATH = "1.0";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -95,13 +95,14 @@ namespace SimpleGeo.Net
             VersionPath = versionPath;
 
             Credentials = oauthCredentials;
+            
+            UserAgent = "simplegeo.Net Client Application";
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
         internal Client()
-            : base()
         {
         }
 
@@ -117,7 +118,7 @@ namespace SimpleGeo.Net
                 throw new ArgumentNullException("handle");
             }
 
-            return this.GetFeatureByHandle(handle.ToString());
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace SimpleGeo.Net
                 throw new ArgumentNullException("handle");
             }
 
-            throw new NotImplementedException();
+            return this.GetFeatureByHandle(Handle.Parse(handle));
         }
 
         /// <summary>

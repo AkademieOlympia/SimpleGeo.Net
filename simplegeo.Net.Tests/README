@@ -1,3 +1,10 @@
 ﻿This project contains the Unit tests for the SimpleGeo.Net assembly.
 However, before running these, you MUST enter your own SimpleGeo OAuth Key and OAuth Secret
 available at http://simplegeo.com/tokens/.
+
+On my machine I've told git to ignore further changes the corresponding app.config/settings files like that:
+	
+	git update-index --assume-unchanged app.config
+	git update-index --assume-unchanged Properties/Settings.*
+
+In order to reverse this, you can simply use the command '--no-assume-unchanged' instead of '--assume-unchanged' (see http://stackoverflow.com/questions/4114163/how-to-tell-git-to-ignore-all-further-edit-to-a-single-file-without-removing-it-f)
