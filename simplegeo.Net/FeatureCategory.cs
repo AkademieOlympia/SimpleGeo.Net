@@ -21,11 +21,21 @@ namespace SimpleGeo.Net
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureCategory"/> class.
         /// </summary>
+        public FeatureCategory()
+        {
+            this.Category = string.Empty;
+            this.Type = string.Empty;
+            this.Subcategory = string.Empty;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureCategory"/> class.
+        /// </summary>
         /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-features#list-feature-categories"/>
         /// <param name="category">The category.</param>
         /// <param name="type">The type of the category.</param>
         /// <param name="subcategory">The subcategory.</param>
-        internal FeatureCategory(string category, string  type, string subcategory = "")
+        internal FeatureCategory(string category, string type, string subcategory = "")
         {
             if (category == null)
             {
@@ -50,16 +60,6 @@ namespace SimpleGeo.Net
             this.Category = category;
             this.Type = type;
             this.Subcategory = subcategory ?? string.Empty;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureCategory"/> class.
-        /// </summary>
-        public FeatureCategory()
-        {
-            this.Category = string.Empty;
-            this.Type = string.Empty;
-            this.Subcategory = string.Empty;
         }
 
         /// <summary>

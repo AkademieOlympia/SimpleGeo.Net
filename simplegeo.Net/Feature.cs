@@ -11,18 +11,25 @@ namespace SimpleGeo.Net
 {
     using System.Collections.Generic;
 
+    using Newtonsoft.Json;
+
+    using SimpleGeo.Net.Helpers.Json.Converters;
+
     /// <summary>
     /// The Features endpoint provides details for all SimpleGeo features.
     /// </summary>
     /// <seealso cref="http://simplegeo.com/docs/getting-started/simplegeo-101#feature"/>
     /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-features"/>
     /// <seealso cref="http://developers.simplegeo.com/blog/2010/12/08/simplegeo-features-api/"/>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Feature
     {
         /// <summary>
         /// Gets the <see cref="Handle"/>.
         /// </summary>
         /// <value>The handle.</value>
+        [JsonProperty]
+        [JsonConverter(typeof(FeatureIdToHandleConverter))]
         public Handle Handle { get; private set; }
 
         /// <summary>

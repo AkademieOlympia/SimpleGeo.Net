@@ -1,6 +1,8 @@
-The currently available simplegeo .Net client library referenced at simplegeo.com seems somewhat.. orphan and outdated and even though I'd like to contribute, VisualBasic.Net is a personal show-stopper for me.
+The currently available simplegeo .Net client library referenced at simplegeo.com seemed somewhat.. orphan and outdated and even though I'd like to contribute, VisualBasic.Net is a personal show-stopper for me.
 
-That's why I decided to hack away a C# / .Net 4 based client library.
+That's why I decided to start hacking away on C# / .Net 4 based client library.
+
+This is currently still WORK IN PROGRESS, however, if you want to hop in and help.. contact me and/or fork away...
 
 Enjoy!
 

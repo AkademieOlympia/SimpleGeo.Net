@@ -130,10 +130,7 @@ namespace SimpleGeo.Net
         /// <returns>A list of the available Feature Categories (see http://simplegeo.com/docs/api-endpoints/simplegeo-features#list-feature-categories)</returns>
         public List<FeatureCategory> GetFeatureCategories()
         {
-            var request = new RestRequest
-                {
-                    Path = "features/categories.json"
-                };
+            var request = this.GetFeatureCategoriesRequest();
 
             string responseContent;
 
@@ -143,6 +140,18 @@ namespace SimpleGeo.Net
             }
 
             return JsonConvert.DeserializeObject<List<FeatureCategory>>(responseContent);
+        }
+
+        /// <summary>
+        /// Gets the feature categories request.
+        /// </summary>
+        /// <returns>A RestRequest prepared for FeatureCategories fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
+        public RestRequest GetFeatureCategoriesRequest()
+        {
+            return new RestRequest
+            {
+                Path = "features/categories.json"
+            };
         }
 
         /// <summary>
