@@ -27,7 +27,7 @@ namespace SimpleGeo.Net
         /// <param name="uniqueString">The unique string.</param>
         /// <param name="approximateLocation">The approximate location.</param>
         /// <param name="epoch">The epoch which will be converted to Unix Timestamp internally.</param>
-        internal Handle(string uniqueString, Coordinate approximateLocation = null, DateTime? epoch = null)
+        public Handle(string uniqueString, Coordinate approximateLocation = null, DateTime? epoch = null)
         {
             if (uniqueString == null)
             {

@@ -14,6 +14,8 @@ using Hammock.Authentication.OAuth;
 namespace SimpleGeo.Net.Tests
 {
     using System;
+    using System.Linq;
+    using System.Threading;
 
     /// <summary>
     ///This is a test class for <see cref="SimpleGeo.Net.Client"/> and is intended
@@ -27,6 +29,8 @@ namespace SimpleGeo.Net.Tests
         ///information about and functionality for the current test run.
         ///</summary>
         public TestContext TestContext { get; set; }
+
+        internal Client _client = null;
 
         #region Additional test attributes
         // 
@@ -45,17 +49,18 @@ namespace SimpleGeo.Net.Tests
         //}
         //
         //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            _client = new Client(Properties.Settings.Default.OAuthToken, Properties.Settings.Default.OAuthSecret);
+        }
+        
         //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            _client = null;
+        }
         #endregion
         
         [TestMethod]
@@ -85,45 +90,45 @@ namespace SimpleGeo.Net.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyAuthorityUrl()
-        {
-            string oauthToken = "Some OAuth Token";
-            string oauthSecret = "Some OAuth Secret";
-            string authority = string.Empty;
-            Client target = new Client(oauthToken, oauthSecret, authority);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ClientConstructorThrowsArgumentNullExceptionOnEmptyApiVersion()
-        {
-            string oauthToken = "Some OAuth Token";
-            string oauthSecret = "Some OAuth Secret";
-            string apiVersion = string.Empty;
-            Client target = new Client(oauthToken, oauthSecret, versionPath:apiVersion);
-        }
-
-        [TestMethod]
         public void ClientConstructorTest()
         {
             string oauthToken = "Some OAuth Token";
             string oauthSecret = "Some OAuth Secret";
-            string apiVersion = "2.0";
-            string authorityUrl = "http://api.someurl.com";
 
-            Client target = new Client(oauthToken, oauthSecret, authorityUrl, apiVersion);
+            Client target = new Client(oauthToken, oauthSecret);
             Assert.IsNotNull(target);
             Assert.IsNotNull(target.Credentials);
             Assert.AreEqual(((OAuthCredentials)target.Credentials).ConsumerKey, oauthToken);
             Assert.AreEqual(((OAuthCredentials)target.Credentials).ConsumerSecret, oauthSecret);
-            Assert.AreEqual(target.Authority, authorityUrl);
-            Assert.AreEqual(target.VersionPath, apiVersion);
         }
 
+        [TestMethod]
         public void GetFeatureByHandleTest()
         {
-                    
+            Assert.Inconclusive("Implement!");  
+        }
+
+        [TestMethod]
+        public void GetFeatureCategoriesTest()
+        {
+            Assert.IsTrue(_client.GetFeatureCategories().Any());
+        }
+
+        [TestMethod]
+        public void GetFeatureCategoriesAsyncTest()
+        {
+            var wasSleeping = false;
+            using (var featureCategoriesTask = _client.GetFeatureCategoriesAsync())
+            {
+                while (!featureCategoriesTask.IsCompleted)
+                {
+                    wasSleeping = true;
+                    Thread.Sleep(5);
+                }
+
+                Assert.IsTrue(featureCategoriesTask.Result.Any());
+                Assert.IsTrue(wasSleeping);
+            }
         }
     }
 }

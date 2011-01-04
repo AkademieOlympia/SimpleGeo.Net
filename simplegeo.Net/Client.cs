@@ -10,14 +10,20 @@
 namespace SimpleGeo.Net
 {
     using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using Hammock;
     using Hammock.Authentication.OAuth;
+
+    using Newtonsoft.Json;
 
     /// <summary>
     /// The Client Class is the main entry point to send requests to and get responses from the SimpleGeo Api
     /// This Class derives from <see cref="Hammock.RestClient"/> allowing direct access to the underlying raw
     /// methods and properties.
     /// </summary>
-    public sealed class Client : Hammock.RestClient
+    public sealed class Client : RestClient
     {
         /// <summary>
         /// Defines the (as of writing) base API Url and endpoint for the SimpleGeo Api
@@ -29,18 +35,16 @@ namespace SimpleGeo.Net
         /// </summary>
         internal const string VERSIONPATH = "1.0";
 
+        private static readonly object _locker = new object();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
         /// <param name="oauthKey">The OAuth key.</param>
         /// <param name="oauthSecret">The OAuth secret.</param>
-        /// <param name="authority">The base API URL (default 'http://api.simplegeo.com').</param>
-        /// <param name="versionPath">The API version (default '1.0').</param>
         public Client(
             string oauthKey,
-            string oauthSecret,
-            string authority = AUTHORITY,
-            string versionPath = VERSIONPATH)
+            string oauthSecret)
             : this(
                 new OAuthCredentials
                     {
@@ -49,9 +53,7 @@ namespace SimpleGeo.Net
                         ParameterHandling = OAuthParameterHandling.HttpAuthorizationHeader,
                         ConsumerKey = oauthKey,
                         ConsumerSecret = oauthSecret
-                    },
-                authority,
-                versionPath)
+                    })
         {
         }
 
@@ -59,12 +61,8 @@ namespace SimpleGeo.Net
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
         /// <param name="oauthCredentials">The oauth credentials.</param>
-        /// <param name="authority">The base API URL (default 'http://api.simplegeo.com'). This will be used in the complete API URL using '{authority}/{versionPath}/'.</param>
-        /// <param name="versionPath">The API version (default '1.0'). This will be used in the complete API URL using '{authority}/{versionPath}/'.</param>
         public Client(
-            OAuthCredentials oauthCredentials,
-            string authority = "http://api.simplegeo.com",
-            string versionPath = "1.0") : this()
+            OAuthCredentials oauthCredentials) : this()
         {
             if (oauthCredentials == null)
             {
@@ -81,18 +79,8 @@ namespace SimpleGeo.Net
                 throw new ArgumentOutOfRangeException("oauthCredentials", "ConsumerSecret must not be empty");
             }
 
-            if (string.IsNullOrWhiteSpace(authority))
-            {
-                throw new ArgumentOutOfRangeException("authority", "A working base url for the SimpleGeo API must be provided (e.g. 'http://api.simplegeo.com')");
-            }
-
-            if (string.IsNullOrWhiteSpace(versionPath))
-            {
-                throw new ArgumentOutOfRangeException("versionPath", "A proper API version string the SimpleGeo API must be provided (e.g. '1.0', see 'http://help.simplegeo.com/entries/209077-what-versions-of-the-api-are-available')");
-            }
-
-            Authority = authority;
-            VersionPath = versionPath;
+            Authority = AUTHORITY;
+            VersionPath = VERSIONPATH;
 
             Credentials = oauthCredentials;
             
@@ -111,7 +99,7 @@ namespace SimpleGeo.Net
         /// </summary>
         /// <param name="handle">The <see cref="Handle"/>.</param>
         /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
-        public Feature GetFeatureByHandle(Handle handle)
+        public Feature GetFeature(Handle handle)
         {
             if (handle == null)
             {
@@ -122,31 +110,48 @@ namespace SimpleGeo.Net
         }
 
         /// <summary>
-        /// Gets the feature by its complete handle, e.g. 'SG_2MySaPILVQG3MoXrsVehyR_37.215297_-119.663837'
+        /// Gets the feature by its complete handle, e.g. 'SG_2MySaPILVQG3MoXrsVehyR_37.215297_-119.663837' (see http://simplegeo.com/docs/getting-started/simplegeo-101#feature for handle format)
         /// </summary>
         /// <param name="handle">The <see cref="Handle"/> but in proper string format.</param>
         /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
-        public Feature GetFeatureByHandle(string handle)
+        public Feature GetFeature(string handle)
         {
             if (handle == null)
             {
                 throw new ArgumentNullException("handle");
             }
 
-            return this.GetFeatureByHandle(Handle.Parse(handle));
+            return this.GetFeature(Handle.Parse(handle));
         }
 
         /// <summary>
-        /// Gets the feature by its handle string components. Note: the 'SG_' part will automatically be prepended
+        /// Gets the feature categories.
         /// </summary>
-        /// <seealso cref="http://simplegeo.com/docs/getting-started/simplegeo-101#handle"/>
-        /// <param name="uniqueString">The unique string.</param>
-        /// <param name="approximateLocation">The approximate location.</param>
-        /// <param name="epoch">The epoch.</param>
-        /// <returns>The requested <c>Feature</c> if found, otherwise <c>null</c>.</returns>
-        public Feature GetFeature(string uniqueString, Coordinate approximateLocation = null, DateTime? epoch = null)
+        /// <returns>A list of the available Feature Categories (see http://simplegeo.com/docs/api-endpoints/simplegeo-features#list-feature-categories)</returns>
+        public List<FeatureCategory> GetFeatureCategories()
         {
-            return this.GetFeatureByHandle(new Handle(uniqueString, approximateLocation, epoch));
+            var request = new RestRequest
+                {
+                    Path = "features/categories.json"
+                };
+
+            string responseContent;
+
+            lock (_locker)
+            {
+                responseContent = Request(request).Content;
+            }
+
+            return JsonConvert.DeserializeObject<List<FeatureCategory>>(responseContent);
+        }
+
+        /// <summary>
+        /// Gets the feature categories asyncronously.
+        /// </summary>
+        /// <returns>A running TPL Task which you can use and read its result from the .Result property</returns>
+        public Task<List<FeatureCategory>> GetFeatureCategoriesAsync()
+        {
+            return Task.Factory.StartNew<List<FeatureCategory>>(this.GetFeatureCategories);
         }
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="Coordinate.cs" />
     <Compile Include="ExtensionMethods\ArrayExtensions.cs" />
     <Compile Include="Feature.cs" />
+    <Compile Include="FeatureCategory.cs" />
     <Compile Include="FeatureCollection.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="Handle.cs" />
