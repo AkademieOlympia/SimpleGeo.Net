@@ -1,18 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MultiPolygon.cs" company="Jörg Battermann">
+// <copyright file="ParsingException.cs" company="Jörg Battermann">
 //   Copyright © Jörg Battermann 2011
 // </copyright>
 // <summary>
-//   Defines the MultiPolygon type.
+//   Defines the ParsingException type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SimpleGeo.Net
+namespace SimpleGeo.Net.Exceptions
 {
-    /// <summary>
-    /// Defines the MultiPolygon type.
-    /// </summary>
-    public class MultiPolygon : IGeometry
+    using System;
+
+    public class ParsingException : ApplicationException
     {
     }
 }

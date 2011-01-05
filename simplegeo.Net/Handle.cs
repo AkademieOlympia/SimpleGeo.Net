@@ -106,6 +106,7 @@ namespace SimpleGeo.Net
 
             if (this.ApproximateLocation != null)
             {
+                stringBuilder.Append("_");
                 stringBuilder.Append(this.ApproximateLocation.Latitude.ToString(CultureInfo.InvariantCulture));
                 stringBuilder.Append("_");
                 stringBuilder.Append(this.ApproximateLocation.Longitude.ToString(CultureInfo.InvariantCulture));

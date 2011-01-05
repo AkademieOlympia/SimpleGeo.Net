@@ -12,6 +12,7 @@ namespace SimpleGeo.Net
     using System.Collections.Generic;
 
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     using SimpleGeo.Net.Helpers.Json.Converters;
 
@@ -28,7 +29,7 @@ namespace SimpleGeo.Net
         /// Gets the <see cref="Handle"/>.
         /// </summary>
         /// <value>The handle.</value>
-        [JsonProperty]
+        [JsonProperty(PropertyName = "id")]
         [JsonConverter(typeof(FeatureIdToHandleConverter))]
         public Handle Handle { get; private set; }
 
@@ -36,18 +37,15 @@ namespace SimpleGeo.Net
         /// Gets the geometry.
         /// </summary>
         /// <value>The geometry.</value>
-        public Geometry Geometry { get; private set; }
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        /// <value>The type of this feature.</value>
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "geometry")]
+        [JsonConverter(typeof(GeometryConverter))]
+        public IGeometry Geometry { get; private set; }
 
         /// <summary>
         /// Gets the properties.
         /// </summary>
         /// <value>The properties.</value>
+        [JsonProperty(PropertyName = "properties")]
         public Dictionary<string, object> Properties { get; private set; }
 
         /// <summary>

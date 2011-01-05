@@ -9,6 +9,9 @@
 
 namespace SimpleGeo.Net
 {
+    using System;
+    using System.Globalization;
+
     /// <summary>
     /// Defines the Coordinate type.
     /// </summary>
@@ -23,6 +26,40 @@ namespace SimpleGeo.Net
         {
             this.Latitude = latitude;
             this.Longitude = longitude;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Coordinate"/> class using decimal degree string lat/lng values.
+        /// </summary>
+        /// <param name="latitude">The latitude, e.g. '38.889722'.</param>
+        /// <param name="longitude">The longitude, e.g. '-77.008889'.</param>
+        public Coordinate(string latitude, string longitude)
+        {
+            if (latitude == null)
+            {
+                throw new ArgumentNullException("latitude");
+            }
+
+            if (longitude == null)
+            {
+                throw new ArgumentNullException("longitude");
+            }
+
+            double lat;
+            double lng;
+
+            if (!double.TryParse(latitude, NumberStyles.Float, CultureInfo.InvariantCulture, out lat))
+            {
+                throw new ArgumentOutOfRangeException("latitude", "Latitude must be a proper lat (+/- double) value, e.g. '38.889722'.");
+            }
+
+            if (!double.TryParse(longitude, NumberStyles.Float, CultureInfo.InvariantCulture, out lng))
+            {
+                throw new ArgumentOutOfRangeException("longitude", "Longitude must be a proper lon (+/- double) value, e.g. '-77.008889'.");
+            }
+
+            this.Latitude = lat;
+            this.Longitude = lng;
         }
 
         /// <summary>
@@ -45,7 +82,7 @@ namespace SimpleGeo.Net
         /// </returns>
         public override string ToString()
         {
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "Latitude: {0}, Longitude: {1}", this.Latitude, this.Longitude);
+            return string.Format(CultureInfo.InvariantCulture, "Latitude: {0}, Longitude: {1}", this.Latitude, this.Longitude);
         }
     }
 }

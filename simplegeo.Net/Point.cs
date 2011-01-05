@@ -18,7 +18,7 @@ namespace SimpleGeo.Net
     /// For example, the point 37° 46' 21.7776", -122° 24' 20.4366" refers to SimpleGeo's San Francisco office.
     /// </example>
     /// <seealso cref="http://simplegeo.com/docs/getting-started/simplegeo-101#point"/>
-    public class Point
+    public class Point : IGeometry
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Point"/> class.

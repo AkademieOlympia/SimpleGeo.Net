@@ -1,18 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MultiPolygon.cs" company="Jörg Battermann">
+// <copyright file="IGeometry.cs" company="Jörg Battermann">
 //   Copyright © Jörg Battermann 2011
 // </copyright>
 // <summary>
-//   Defines the MultiPolygon type.
+//   Defines the IGeometry type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace SimpleGeo.Net
 {
     /// <summary>
-    /// Defines the MultiPolygon type.
+    /// Base Interface for Geometry types. Features can have either Point, Polygon or MultiPolygon coordinates and therefore
+    /// these implement this interface
     /// </summary>
-    public class MultiPolygon : IGeometry
+    public interface IGeometry
     {
     }
 }

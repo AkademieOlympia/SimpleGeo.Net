@@ -11,6 +11,7 @@ namespace SimpleGeo.Net
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization.Formatters;
     using System.Threading.Tasks;
 
     using Hammock;
@@ -106,7 +107,18 @@ namespace SimpleGeo.Net
                 throw new ArgumentNullException("handle");
             }
 
-            throw new NotImplementedException();
+            var request = this.GetFeatureRequest(handle);
+
+            string responseContent;
+
+            lock (_locker)
+            {
+                responseContent = Request(request).Content;
+            }
+
+            return JsonConvert.DeserializeObject<Feature>(
+                responseContent,
+                new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
         }
 
         /// <summary>
@@ -122,6 +134,19 @@ namespace SimpleGeo.Net
             }
 
             return this.GetFeature(Handle.Parse(handle));
+        }
+
+        /// <summary>
+        /// Gets the feature request.
+        /// </summary>
+        /// <param name="handle">The SimpleGeo feature handle.</param>
+        /// <returns>A <c>RestRequest</c> prepared for Feature fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
+        public RestRequest GetFeatureRequest(Handle handle)
+        {
+            return new RestRequest
+            {
+                Path = string.Format("features/{0}.json", handle)
+            };
         }
 
         /// <summary>
@@ -145,7 +170,7 @@ namespace SimpleGeo.Net
         /// <summary>
         /// Gets the feature categories request.
         /// </summary>
-        /// <returns>A RestRequest prepared for FeatureCategories fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
+        /// <returns>A <c>RestRequest</c> prepared for FeatureCategories fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
         public RestRequest GetFeatureCategoriesRequest()
         {
             return new RestRequest
