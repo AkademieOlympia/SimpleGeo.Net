@@ -48,6 +48,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
+    <Compile Include="Exceptions\ParsingException.cs" />
     <Compile Include="ExtensionMethods\ArrayExtensions.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureCategory.cs" />
