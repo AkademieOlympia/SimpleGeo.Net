@@ -1,21 +1,28 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FeatureIdToHandleConverter.cs" company="Jörg Battermann">
+// <copyright file="PolygonConverter.cs" company="Jörg Battermann">
 //   Copyright © Jörg Battermann 2011
 // </copyright>
 // <summary>
-//   Defines the FeatureIdToHandleConverter type.
+//   Defines the PolygonConverter type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace SimpleGeo.Net.Helpers.Json.Converters
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
+
+    using SimpleGeo.Net.Exceptions;
 
     /// <summary>
-    /// Defines the FeatureIdToHandleConverter type. Converts to/from a SimpleGeo Feature's 'id' field
+    /// Converter to read and write the <see cref="MultiPolygon" /> type.
     /// </summary>
-    public class FeatureIdToHandleConverter : JsonConverter
+    public class PolygonConverter : JsonConverter
     {
         /// <summary>
         /// Writes the JSON representation of the object.
@@ -23,7 +30,6 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param><param name="value">The value.</param><param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            // ToDo: implement
             throw new NotImplementedException();
         }
 
@@ -36,7 +42,35 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         /// </returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return Handle.TryParse(serializer.Deserialize<string>(reader));
+            var pointsArray = (JArray)serializer.Deserialize(reader);
+
+            if (pointsArray == null || pointsArray.Count != 1)
+            {
+                throw new ParsingException("Polygon geometry coordinates could not be parsed.");
+            }
+
+            var points = new List<Point>();
+            var parsingErrors = new List<Exception>();
+
+            var polygonDeserializerSettings = new JsonSerializerSettings
+            {
+                Error = delegate(object sender, ErrorEventArgs args)
+                {
+                    parsingErrors.Add(args.ErrorContext.Error);
+                    args.ErrorContext.Handled = true;
+                },
+                Converters = { new PointConverter() }
+            };
+            points.AddRange(JsonConvert.DeserializeObject<List<Point>>(
+                pointsArray.First.ToString(),
+                polygonDeserializerSettings));
+
+            if (parsingErrors.Any())
+            {
+                throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+            }
+
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -48,7 +82,7 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Handle);
+            return objectType == typeof(Polygon);
         }
     }
 }

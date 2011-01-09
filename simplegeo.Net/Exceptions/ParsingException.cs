@@ -11,7 +11,19 @@ namespace SimpleGeo.Net.Exceptions
 {
     using System;
 
+    /// <summary>
+    /// Exception raised when response from SimpleGeo API cannot be parsed
+    /// </summary>
     public class ParsingException : ApplicationException
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParsingException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public ParsingException(string message = "", Exception innerException = null)
+            : base(message, innerException)
+        {
+        }
     }
 }

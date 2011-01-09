@@ -11,9 +11,13 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
+
+    using SimpleGeo.Net.Exceptions;
 
     /// <summary>
     /// Defines the Geometry type. Converts to/from a SimpleGeo 'geometry' field
@@ -40,26 +44,93 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var geometry = serializer.Deserialize<Dictionary<string, object>>(reader);
-            switch ((string)geometry["type"])
+            JArray coordinates;
+            try
             {
-                case null:
-                    return null;
-                    break;
-                case "Point":
-                    var coordinates = (JArray)geometry["coordinates"];
-                    var latitude = coordinates.First.ToString();
-                    var longitude = coordinates.Last.ToString();
-                    return new Point(new Coordinate(latitude, longitude));
-                    break;
-                case "Polygon":
-                    break;
-                case "MultiPolygon":
-                    break;
-                default:
-                    break;
+                coordinates = (JArray)geometry["coordinates"];
+                if (coordinates == null || !coordinates.HasValues)
+                {
+                    throw new ParsingException("Could not Parse SimpleGeo Response. (Coordinates missing?)");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ParsingException("Could not Parse SimpleGeo Response. (Coordinates missing?)", ex);
             }
 
-            return Handle.TryParse(serializer.Deserialize<string>(reader));
+            var parsingErrors = new List<Exception>();
+
+            // ToDo: tidy up redundancies
+            var geometryType = (string)geometry["type"];
+            switch (geometryType.Trim())
+            {
+                case null:
+                case "":
+                    return null;
+                case "Point":
+                    var pointDeserializerSettings = new JsonSerializerSettings
+                            {
+                                Error = delegate(object sender, ErrorEventArgs args)
+                                    {
+                                        parsingErrors.Add(args.ErrorContext.Error);
+                                        args.ErrorContext.Handled = true;
+                                    },
+                                Converters = { new PointConverter() }
+                            };
+                    var point = JsonConvert.DeserializeObject<Point>(
+                        coordinates.ToString(),
+                        pointDeserializerSettings);
+
+                    if (parsingErrors.Any())
+                    {
+                        throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+                    }
+
+                    return point;
+                case "Polygon":
+                    var polygonDeserializerSettings = new JsonSerializerSettings
+                            {
+                                Error = delegate(object sender, ErrorEventArgs args)
+                                    {
+                                        parsingErrors.Add(args.ErrorContext.Error);
+                                        args.ErrorContext.Handled = true;
+                                    },
+                                Converters = { new PolygonConverter() }
+                            };
+                    var polygon = JsonConvert.DeserializeObject<Polygon>(
+                        coordinates.ToString(),
+                        polygonDeserializerSettings);
+
+                    if (parsingErrors.Any())
+                    {
+                        throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+                    }
+
+                    return polygon;
+
+                case "MultiPolygon":
+                    var multipolygonDeserializerSettings = new JsonSerializerSettings
+                            {
+                                Error = delegate(object sender, ErrorEventArgs args)
+                                    {
+                                        parsingErrors.Add(args.ErrorContext.Error);
+                                        args.ErrorContext.Handled = true;
+                                    },
+                                Converters = { new MultiPolygonConverter() }
+                            };
+                    var multiPolygon = JsonConvert.DeserializeObject<MultiPolygon>(
+                        coordinates.ToString(),
+                        multipolygonDeserializerSettings);
+
+                    if (parsingErrors.Any())
+                    {
+                        throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+                    }
+
+                    return multiPolygon;
+                default:
+                    throw new ParsingException(string.Format("Unknown geometry type '{0}' cannot be parsed.", geometryType));
+            }
         }
 
         /// <summary>

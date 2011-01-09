@@ -36,7 +36,10 @@ namespace SimpleGeo.Net
         /// </summary>
         internal const string VERSIONPATH = "1.0";
 
-        private static readonly object _locker = new object();
+        /// <summary>
+        /// Locking object used for thread-safety of underlying hammock client
+        /// </summary>
+        private static readonly object clientLocker = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -111,7 +114,7 @@ namespace SimpleGeo.Net
 
             string responseContent;
 
-            lock (_locker)
+            lock (clientLocker)
             {
                 responseContent = Request(request).Content;
             }
@@ -133,7 +136,47 @@ namespace SimpleGeo.Net
                 throw new ArgumentNullException("handle");
             }
 
+            if (string.IsNullOrWhiteSpace(handle))
+            {
+                throw new ArgumentOutOfRangeException("handle", "Handle may not be empty.");
+            }
+
             return this.GetFeature(Handle.Parse(handle));
+        }
+
+        /// <summary>
+        /// Gets the feature by its <c>Handle</c>.
+        /// </summary>
+        /// <param name="handle">The <see cref="Handle"/>.</param>
+        /// <returns>A running TPL Task which you can use and read its result from the .Result property</returns>
+        public Task<Feature> GetFeatureAsync(Handle handle)
+        {
+            if (handle == null)
+            {
+                throw new ArgumentNullException("handle");
+            }
+
+            return Task.Factory.StartNew(() => this.GetFeature(handle));
+        }
+
+        /// <summary>
+        /// Gets the feature by its complete handle, e.g. 'SG_2MySaPILVQG3MoXrsVehyR_37.215297_-119.663837' (see http://simplegeo.com/docs/getting-started/simplegeo-101#feature for handle format)
+        /// </summary>
+        /// <param name="handle">The <see cref="Handle"/> but in proper string format.</param>
+        /// <returns>A running TPL Task which you can use and read its result from the .Result property</returns>
+        public Task<Feature> GetFeatureAsync(string handle)
+        {
+            if (handle == null)
+            {
+                throw new ArgumentNullException("handle");
+            }
+
+            if (string.IsNullOrWhiteSpace(handle))
+            {
+                throw new ArgumentOutOfRangeException("handle", "Handle may not be empty.");
+            }
+
+            return Task.Factory.StartNew(() => this.GetFeature(handle));
         }
 
         /// <summary>
@@ -159,7 +202,7 @@ namespace SimpleGeo.Net
 
             string responseContent;
 
-            lock (_locker)
+            lock (clientLocker)
             {
                 responseContent = Request(request).Content;
             }
