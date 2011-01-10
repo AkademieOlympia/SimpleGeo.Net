@@ -103,7 +103,7 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
 
                     if (parsingErrors.Any())
                     {
-                        throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+                        throw new AggregateException("Error parsing Geometry.", parsingErrors);
                     }
 
                     return polygon;
@@ -124,7 +124,7 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
 
                     if (parsingErrors.Any())
                     {
-                        throw new AggregateException("Error Parsing Geometry.", parsingErrors);
+                        throw new AggregateException("Error parsing Geometry.", parsingErrors);
                     }
 
                     return multiPolygon;

@@ -21,7 +21,7 @@ namespace SimpleGeo.Net.Exceptions
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="innerException">The inner exception.</param>
-        public ParsingException(string message = "", Exception innerException = null)
+        public ParsingException(string message = "Could not parse SimpleGeo Response.", Exception innerException = null)
             : base(message, innerException)
         {
         }

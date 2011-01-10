@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PolygonConverter.cs" company="Jörg Battermann">
+// <copyright file="TimestampConverter.cs" company="Jörg Battermann">
 //   Copyright © Jörg Battermann 2011
 // </copyright>
 // <summary>
@@ -10,19 +10,15 @@
 namespace SimpleGeo.Net.Helpers.Json.Converters
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Newtonsoft.Json.Serialization;
 
     using SimpleGeo.Net.Exceptions;
 
     /// <summary>
     /// Converter to read and write the <see cref="MultiPolygon" /> type.
     /// </summary>
-    public class PolygonConverter : JsonConverter
+    public class TimestampConverter : JsonConverter
     {
         /// <summary>
         /// Writes the JSON representation of the object.
@@ -42,35 +38,20 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         /// </returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var pointsArray = (JArray)serializer.Deserialize(reader);
-
-            if (pointsArray == null || pointsArray.Count != 1)
+            var dateTime = serializer.Deserialize<int?>(reader);
+            if (dateTime == null)
             {
-                throw new ParsingException("Polygon geometry coordinates could not be parsed.");
+                throw new ParsingException("DateTime property could not be parsed. Expected something like '1278696668'");
             }
 
-            var points = new List<Point>();
-            var parsingErrors = new List<Exception>();
-
-            var polygonDeserializerSettings = new JsonSerializerSettings
+            try
             {
-                Error = delegate(object sender, ErrorEventArgs args)
-                {
-                    parsingErrors.Add(args.ErrorContext.Error);
-                    args.ErrorContext.Handled = true;
-                },
-                Converters = { new PointConverter() }
-            };
-            points.AddRange(JsonConvert.DeserializeObject<List<Point>>(
-                pointsArray.First.ToString(),
-                polygonDeserializerSettings));
-
-            if (parsingErrors.Any())
-            {
-                throw new AggregateException("Error parsing Geometry.", parsingErrors);
+                return Helpers.DateTime.ConvertFromUnixTimestamp((double)dateTime);
             }
-
-            return new Polygon(points);
+            catch (Exception ex)
+            {
+                throw new ParsingException(innerException: ex);
+            }
         }
 
         /// <summary>
@@ -82,7 +63,7 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
         /// </returns>
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Polygon);
+            return objectType == typeof(DateTime);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace SimpleGeo.Net.Helpers.Json.Converters
             }
             catch (Exception ex)
             {
-                throw new ParsingException("Could not Parse SimpleGeo Response. (Latitude or Longitude missing from Point geometry?)", ex);
+                throw new ParsingException("Could not parse SimpleGeo Response. (Latitude or Longitude missing from Point geometry?)", ex);
             }
 
             return new Point(new Coordinate(latitude, longitude));

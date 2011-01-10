@@ -12,7 +12,6 @@ namespace SimpleGeo.Net
     using System.Collections.Generic;
 
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
 
     using SimpleGeo.Net.Helpers.Json.Converters;
 
@@ -40,14 +39,14 @@ namespace SimpleGeo.Net
         [JsonProperty(PropertyName = "geometry")]
         [JsonConverter(typeof(GeometryConverter))]
         public IGeometry Geometry { get; private set; }
-
+        
         /// <summary>
         /// Gets the properties.
         /// </summary>
         /// <value>The properties.</value>
         [JsonProperty(PropertyName = "properties")]
         public Dictionary<string, object> Properties { get; private set; }
-
+        
         /// <summary>
         /// Gets the URL.
         /// </summary>

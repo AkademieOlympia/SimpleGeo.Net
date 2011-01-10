@@ -53,6 +53,7 @@
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureCategory.cs" />
     <Compile Include="FeatureCollection.cs" />
+    <Compile Include="Helpers\Json\Converters\TimestampConverter.cs" />
     <Compile Include="Helpers\Json\Converters\PointConverter.cs" />
     <Compile Include="Helpers\Json\Converters\PolygonConverter.cs" />
     <Compile Include="Helpers\Json\Converters\GeometryConverter.cs" />
