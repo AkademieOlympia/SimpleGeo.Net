@@ -11,6 +11,8 @@ namespace SimpleGeo.Net
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Net.Sockets;
     using System.Runtime.Serialization.Formatters;
     using System.Threading.Tasks;
 
@@ -46,9 +48,7 @@ namespace SimpleGeo.Net
         /// </summary>
         /// <param name="oauthKey">The OAuth key.</param>
         /// <param name="oauthSecret">The OAuth secret.</param>
-        public Client(
-            string oauthKey,
-            string oauthSecret)
+        public Client(string oauthKey, string oauthSecret)
             : this(
                 new OAuthCredentials
                     {
@@ -65,8 +65,8 @@ namespace SimpleGeo.Net
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
         /// <param name="oauthCredentials">The oauth credentials.</param>
-        public Client(
-            OAuthCredentials oauthCredentials) : this()
+        public Client(OAuthCredentials oauthCredentials)
+            : this()
         {
             if (oauthCredentials == null)
             {
@@ -87,7 +87,7 @@ namespace SimpleGeo.Net
             VersionPath = VERSIONPATH;
 
             Credentials = oauthCredentials;
-            
+
             UserAgent = "simplegeo.Net Client Application";
         }
 
@@ -96,6 +96,159 @@ namespace SimpleGeo.Net
         /// </summary>
         internal Client()
         {
+        }
+
+        /// <summary>
+        /// Gets the nearby places by address.
+        /// </summary>
+        /// <param name="address">The address. <example>24 Willie Mays, San Francisco, CA</example></param>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>
+        /// A <c>FeatureCollection</c> containing all nearby places.
+        /// </returns>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        public FeatureCollection GetNearbyPlaces(
+            string address, string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (address == null)
+            {
+                throw new ArgumentNullException("address");
+            }
+
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                throw new ArgumentOutOfRangeException(
+                    "address",
+                    "Address may not be null (e.g. '24 Willie Mays, San Francisco, CA' is a nice query fine).");
+            }
+
+            if (radius < 0)
+            {
+                throw new ArgumentOutOfRangeException("radius", "Radius must be >= 0");
+            }
+
+            // ToDo: implement
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the nearby places by implicitly using the client's public IP address.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>
+        /// A <c>FeatureCollection</c> containing all nearby places.
+        /// </returns>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation",
+            Justification = "Reviewed. Suppression is OK here ('ipAddress' IS valid).")]
+        public FeatureCollection GetNearbyPlaces(
+            System.Net.IPAddress ipAddress, string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException("ipAddress");
+            }
+
+            if (ipAddress.AddressFamily != AddressFamily.InterNetwork)
+            {
+                throw new ArgumentOutOfRangeException("ipAddress", "Only IPV4 addresses are supported");
+            }
+            
+            if (radius < 0)
+            {
+                throw new ArgumentOutOfRangeException("radius", "Radius must be >= 0");
+            }
+
+            // ToDo: implement
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the nearby places by user's IP address.
+        /// </summary>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>
+        /// A <c>FeatureCollection</c> containing all nearby places.
+        /// </returns>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        public FeatureCollection GetNearbyPlaces(string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (radius < 0)
+            {
+                throw new ArgumentOutOfRangeException("radius", "Radius must be >= 0");
+            }
+
+            // ToDo: implement
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the nearby places by location.
+        /// </summary>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        /// <param name="latitude">The latitude.</param>
+        /// <param name="longitude">The longitude.</param>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>A <c>FeatureCollection</c> containing all nearby places.</returns>
+        public FeatureCollection GetNearbyPlaces(
+            double latitude, double longitude, string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (radius < 0)
+            {
+                throw new ArgumentOutOfRangeException("radius", "Radius must be >= 0");
+            }
+
+            // ToDo: implement
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the nearby places by location.
+        /// </summary>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        /// <param name="coordinate">The coordinate.</param>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>A <c>FeatureCollection</c> containing all nearby places.</returns>
+        public FeatureCollection GetNearbyPlaces(
+            Coordinate coordinate, string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (coordinate == null)
+            {
+                throw new ArgumentNullException("coordinate");
+            }
+
+            return this.GetNearbyPlaces(coordinate.Latitude, coordinate.Longitude, searchTerm, category, radius);
+        }
+
+        /// <summary>
+        /// Gets the nearby places by location.
+        /// </summary>
+        /// <seealso cref="http://simplegeo.com/docs/api-endpoints/simplegeo-places#search"/>
+        /// <param name="point">The point.</param>
+        /// <param name="searchTerm">The search term (optional). <example>Diner</example></param>
+        /// <param name="category">The category, filter by an exact classifier (types, categories, subcategories, tags). <example>Restaurant</example></param>
+        /// <param name="radius">Search by radius in kilometers. Default radius is 25</param>
+        /// <returns>A <c>FeatureCollection</c> containing all nearby places.</returns>
+        public FeatureCollection GetNearbyPlaces(
+            Point point, string searchTerm = "", string category = "", int radius = 25)
+        {
+            if (point == null)
+            {
+                throw new ArgumentNullException("point");
+            }
+
+            return this.GetNearbyPlaces(point.Coordinate, searchTerm, category, radius);
         }
 
         /// <summary>
@@ -121,7 +274,8 @@ namespace SimpleGeo.Net
 
             return JsonConvert.DeserializeObject<Feature>(
                 responseContent,
-                new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
+                new JsonSerializerSettings
+                    { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
         }
 
         /// <summary>
@@ -186,10 +340,7 @@ namespace SimpleGeo.Net
         /// <returns>A <c>RestRequest</c> prepared for Feature fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
         public RestRequest GetFeatureRequest(Handle handle)
         {
-            return new RestRequest
-            {
-                Path = string.Format("features/{0}.json", handle)
-            };
+            return new RestRequest { Path = string.Format("features/{0}.json", handle) };
         }
 
         /// <summary>
@@ -216,10 +367,7 @@ namespace SimpleGeo.Net
         /// <returns>A <c>RestRequest</c> prepared for FeatureCategories fetching but which you can either manipulate further or e.g. use in raw Async calls</returns>
         public RestRequest GetFeatureCategoriesRequest()
         {
-            return new RestRequest
-            {
-                Path = "features/categories.json"
-            };
+            return new RestRequest { Path = "features/categories.json" };
         }
 
         /// <summary>
