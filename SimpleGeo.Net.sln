@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simplegeo.Net", "simplegeo.Net\simplegeo.Net.csproj", "{C607F429-A611-4111-A27F-B10EB9B50BC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGeo.Net", "SimpleGeo.Net\SimpleGeo.Net.csproj", "{C607F429-A611-4111-A27F-B10EB9B50BC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DB805DB-E0B5-43DC-9832-7D709B553443}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,23 +9,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README = README
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simplegeo.Net.Tests", "simplegeo.Net.Tests\simplegeo.Net.Tests.csproj", "{2F3B9386-7341-49B9-8738-7D275AD8DE2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGeo.Net.Tests", "SimpleGeo.Net.Tests\SimpleGeo.Net.Tests.csproj", "{2F3B9386-7341-49B9-8738-7D275AD8DE2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simplegeo.Net.SampleApp", "simplegeo.Net.SampleApp\simplegeo.Net.SampleApp.csproj", "{24E8B27A-375B-4DFC-8E69-CE78D61FF52F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGeo.Net.SampleApp", "SimpleGeo.Net.SampleApp\SimpleGeo.Net.SampleApp.csproj", "{24E8B27A-375B-4DFC-8E69-CE78D61FF52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simplegeo.Net.Silverlight", "simplegeo.Net.Silverlight\simplegeo.Net.Silverlight.csproj", "{86F541B1-6719-4622-9F60-BB44252E5BC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGeo.Net.Silverlight", "SimpleGeo.Net.Silverlight\SimpleGeo.Net.Silverlight.csproj", "{86F541B1-6719-4622-9F60-BB44252E5BC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{AA4214D8-D7A9-449D-A70E-D311F13DC84A}"
 	ProjectSection(SolutionItems) = preProject
-		simplegeo.Net.testsettings = simplegeo.Net.testsettings
-		simplegeo.Net.vsmdi = simplegeo.Net.vsmdi
+		SimpleGeo.Net.testsettings = SimpleGeo.Net.testsettings
+		SimpleGeo.Net.vsmdi = SimpleGeo.Net.vsmdi
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Applications", "Sample Applications", "{06F676CC-7962-4121-ACCF-744CE3470669}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client Libraries", "Client Libraries", "{F77669C8-9D01-47BD-BFA4-8A0201512D7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simplegeo.Net.WindowsPhone", "simplegeo.Net.WindowsPhone\simplegeo.Net.WindowsPhone.csproj", "{CCF81E0E-EBAD-4C4B-B48F-9851D39B3344}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGeo.Net.WindowsPhone", "SimpleGeo.Net.WindowsPhone\SimpleGeo.Net.WindowsPhone.csproj", "{CCF81E0E-EBAD-4C4B-B48F-9851D39B3344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

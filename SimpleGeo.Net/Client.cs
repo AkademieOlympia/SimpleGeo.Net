@@ -274,8 +274,7 @@ namespace SimpleGeo.Net
 
             return JsonConvert.DeserializeObject<Feature>(
                 responseContent,
-                new JsonSerializerSettings
-                    { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
+                new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple });
         }
 
         /// <summary>
