@@ -1,3 +1,14 @@
+This library is currently unfinished - I suggest using John's code for the time being:
+
+http://dllhell.net/2011/02/01/on-a-quick-and-dirty-simplegeo-client-for-net/
+
+-J
+
+
+
+
+###################
+
 The currently available SimpleGeo .Net client library originally referenced at simplegeo.com seemed somewhat.. orphan and outdated and even though I'd like to contribute, VisualBasic.Net is a personal show-stopper for me.
 
 That's why I decided to start hacking away on C# / .Net 4 based client library.
