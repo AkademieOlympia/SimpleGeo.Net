@@ -98,6 +98,44 @@ namespace SimpleGeo.Net
         {
         }
 
+
+        /// <summary>
+        /// Gets the context by the latitude and longitude
+        /// </summary>
+        /// <param name="lat">The latitude</param>
+        /// <param name="lon">The longitude</param>
+        /// <returns>JSON context response wrapped in the RestResponse object</returns>
+        public RestResponse GetContext(double lat = 0, double lon = 0)
+        {
+            return this.Request(new RestRequest { Path = string.Format("context/{0},{1}.json", lat, lon) });
+        }
+
+        /// <summary>
+        /// Returns the context by either the address or the specified IP
+        /// </summary>
+        /// <param name="addressOrIP">Either an address or an IP</param>
+        /// <param name="type">The type of being use. Values: "address", "ip"</param>
+        /// <returns></returns>
+        public RestResponse GetContext(string addressOrIP, string type = "address")
+        {
+            if(type == "address")
+                return this.Request(new RestRequest { Path = string.Format("context/address.json?address={0}", addressOrIP) });
+            else if(type == "ip")
+                return this.Request(new RestRequest { Path = string.Format("context/{0}.json", addressOrIP) });
+            return null;
+        }
+
+        /// <summary>
+        /// Get the context by the user's IP address.
+        /// </summary>
+        /// <returns>JSON context response wrapped in the RestResponse object</returns>
+        public RestResponse GetContext()
+        {
+            return this.Request(new RestRequest { Path = "context/ip.json" });
+        }
+
+
+
         /// <summary>
         /// Gets the nearby places by address.
         /// </summary>
