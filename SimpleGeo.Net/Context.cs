@@ -5,12 +5,22 @@ using System.Text;
 
 namespace SimpleGeo.Net
 {
+    using SimpleGeo.Net.Helpers;
+
     class Context
     {
-        // TODO: this may only work for lon,lat requests
-        private KeyValuePair<String, Double>[] query = new KeyValuePair<String, Double>[2];
-        private String timestamp;
-        private FeatureCollection Features;
+        /// <summary>
+        /// No-Arg constructor is necessary for the de-serialization of JSON data
+        /// </summary>
+        public Context() { }
 
+
+        public Query query { get; set; }
+        public string timestamp { get; set; }
+        public Feature[] features { get; set; }
+        public Weather weather { get; set; }
+        public Intersection[] intersections { get; set; }
+        public Demographics demographics { get; set; }
+        public Address address { get; set; }
     }
 }

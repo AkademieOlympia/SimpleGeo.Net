@@ -59,7 +59,7 @@
     <Compile Include="Helpers\Json\Converters\PolygonConverter.cs" />
     <Compile Include="Helpers\Json\Converters\GeometryConverter.cs" />
     <Compile Include="Helpers\Json\Converters\MultiPolygonConverter.cs" />
-    <Compile Include="Helpers\Weather.cs" />
+    <Compile Include="Helpers\ContextHelpers.cs" />
     <Compile Include="IGeometry.cs" />
     <Compile Include="Handle.cs" />
     <Compile Include="Helpers\DateTime.cs" />
