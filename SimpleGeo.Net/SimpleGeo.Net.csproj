@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Exceptions\ApiException.cs" />
     <Compile Include="Exceptions\ParsingException.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Helpers\Json\Converters\PolygonConverter.cs" />
     <Compile Include="Helpers\Json\Converters\GeometryConverter.cs" />
     <Compile Include="Helpers\Json\Converters\MultiPolygonConverter.cs" />
+    <Compile Include="Helpers\Weather.cs" />
     <Compile Include="IGeometry.cs" />
     <Compile Include="Handle.cs" />
     <Compile Include="Helpers\DateTime.cs" />
@@ -67,6 +69,9 @@
     <Compile Include="Point.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Attribution.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
