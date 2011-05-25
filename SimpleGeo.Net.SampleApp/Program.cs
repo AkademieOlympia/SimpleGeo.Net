@@ -7,20 +7,29 @@ namespace SimpleGeo.Net.SampleApp
 {
     using Hammock;
     using Hammock.Authentication.OAuth;
+    using Newtonsoft.Json;
+    using SimpleGeo.Net.Helpers;
+    using SimpleGeo.Net;
     
     class Program
     {
+
         static void Main(string[] args)
         {
-            var def = Handle.Parse("SG_2AziTafTLNReeHpRRkfipn_37.766713_-122.428938@1291796505");
+            //var def = Handle.Parse("SG_2AziTafTLNReeHpRRkfipn_37.766713_-122.428938@1291796505");
 
-            Console.WriteLine(def.ToString());
+            //Console.WriteLine(def.ToString());
 
-            var abc = new SimpleGeo.Net.Client("", "");
-            
-            string consumerKey = "<enter here>";
-            string consumerSecret = "<enter here>";
-            
+            string consumerKey = "a6CZNXGZtn32GyyCbkMynZEbFGDhJSUm";
+            string consumerSecret = "e5xEHjtC9vwM248yYNucZs8vFwTm2Qqf";
+
+            var abc = new SimpleGeo.Net.Client(consumerKey, consumerSecret);
+
+            var hmm = abc.GetContext(38.31956371178672, -85.76507091522217);
+            var idk = JsonConvert.DeserializeObject<Dictionary<string, object>>(hmm.Content);
+
+            var skldjfdf = "sldkf";
+
             //var baseUrl = "http://api.simplegeo.com";
             //var apiVersion = "1.0";           
             //var apiUrl = string.Format("{0}/{1}/", baseUrl, apiVersion);
